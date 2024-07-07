@@ -3,12 +3,13 @@ import TodoItem from "../todoitem/TodoItem";
 import s from "./TodoList.module.css";
 import todoData from "../../assets/todos.json";
 
-console.log(
+/* console.log(
   "TodoList id:",
   todoData[0].id,
   "TodoList Color:",
   todoData[0].color
 );
+ */
 const TodoList = () => {
   const [todolist, setTodoList] = useState();
   const handleTodolist = () => {

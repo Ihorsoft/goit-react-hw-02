@@ -1,6 +1,7 @@
 import { useState } from "react";
+import s from "./Options.module.css";
 
-const Options = ({ feedbackObj, handleClickGood }) => {
+const Options = ({ feedbackObj, updateFeedback }) => {
   const { good, neutral, bad, reset } = feedbackObj;
 
   /* const handleClickGood = (name) => {
@@ -47,12 +48,20 @@ const Options = ({ feedbackObj, handleClickGood }) => {
 
   return (
     <div>
-      <div>
-        <button onClick={() => handleClickGood("good")}>Good {good}</button>
-        <button onClick={() => handleClickGood("neutral")}>Neutral</button>
-        <button onClick={() => handleClickGood("bad")}>Bad</button>
+      <div className={s.list}>
+        <button onClick={() => updateFeedback("good")} className={s.item}>
+          Good
+        </button>
+        <button onClick={() => updateFeedback("neutral")} className={s.item}>
+          Neutral
+        </button>
+        <button onClick={() => updateFeedback("bad")} className={s.item}>
+          Bad
+        </button>
         {reset ? (
-          <button onClick={() => handleClickGood("reset")}>Reset</button>
+          <button onClick={() => updateFeedback("reset")} className={s.item}>
+            Reset
+          </button>
         ) : (
           <></>
         )}
