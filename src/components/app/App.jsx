@@ -4,8 +4,7 @@ import "./App.css";
 import Description from "../description/Description";
 import Feedback from "../feedback/Feedback.jsx";
 import Options from "../options/Options";
-import ColorPicker from "../colorpicker/ColorPicker";
-import TodoList from "../todolist/TodoList.jsx";
+import Notification from "../notification/Notification.jsx";
 
 function App() {
   const updateFeedback = (feedbackType) => {
@@ -14,7 +13,6 @@ function App() {
         setFeedbackObj((feedbackObj) => ({
           ...feedbackObj,
           good: feedbackObj.good + 1,
-          reset: true,
         }));
 
         break;
@@ -23,7 +21,6 @@ function App() {
         setFeedbackObj({
           ...feedbackObj,
           neutral: feedbackObj.neutral + 1,
-          reset: true,
         });
         break;
 
@@ -31,7 +28,6 @@ function App() {
         setFeedbackObj({
           ...feedbackObj,
           bad: feedbackObj.bad + 1,
-          reset: true,
         });
         break;
 
@@ -41,7 +37,6 @@ function App() {
           good: 0,
           neutral: 0,
           bad: 0,
-          reset: false,
         });
         break;
     }
@@ -51,7 +46,6 @@ function App() {
     good: 0,
     neutral: 0,
     bad: 0,
-    reset: false,
   };
 
   const [feedbackObj, setFeedbackObj] = useState(() => {
@@ -68,19 +62,30 @@ function App() {
   }, [feedbackObj]);
 
   let totalFeedback = feedbackObj.good + feedbackObj.neutral + feedbackObj.bad;
-  let positiveFeedback = Math.round((feedbackObj.good / totalFeedback) * 100);
+  let positiveFeedback = 0;
+  if (totalFeedback !== 0) {
+    positiveFeedback = Math.round((feedbackObj.good / totalFeedback) * 100);
+  } else {
+    positiveFeedback = 0;
+  }
 
   return (
     <>
       <Description />
-      <Options feedbackObj={feedbackObj} updateFeedback={updateFeedback} />
-      <Feedback
+      <Options
         feedbackObj={feedbackObj}
         totalFeedback={totalFeedback}
-        positiveFeedback={positiveFeedback}
+        updateFeedback={updateFeedback}
       />
-      {/*  <ColorPicker />
-      <TodoList /> */}
+      {totalFeedback === 0 ? (
+        <Notification />
+      ) : (
+        <Feedback
+          feedbackObj={feedbackObj}
+          totalFeedback={totalFeedback}
+          positiveFeedback={positiveFeedback}
+        />
+      )}
     </>
   );
 }
